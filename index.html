@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator</title>
+  <!-- Google AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .input-section {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      input, button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 EMI Calculator</h1>
+    <div class="input-section">
+      <label for="principal">💰 Principal Amount (₹):</label>
+      <input type="number" id="principal" placeholder="Enter principal amount" min="0">
+    </div>
+    <div class="input-section">
+      <label for="interest">📈 Interest Rate (%):</label>
+      <input type="number" id="interest" placeholder="Enter interest rate" min="0">
+    </div>
+    <div class="input-section">
+      <label for="time">⏳ Time (Years):</label>
+      <input type="number" id="time" placeholder="Enter time in years" min="0">
+    </div>
+    <button id="calculate-btn">Calculate EMI</button>
+
+    <div id="result" class="hidden">
+      <h2>📋 Results</h2>
+      <table>
+        <tr>
+          <th>EMI (₹)</th>
+          <th>Total Interest (₹)</th>
+          <th>Total Payment (₹)</th>
+        </tr>
+        <tr>
+          <td id="emi">-</td>
+          <td id="total-interest">-</td>
+          <td id="total-payment">-</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Google AdSense Ad Unit -->
+    <div style="margin-top: 20px; text-align: center;">
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="YYYYYYYYYY"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("calculate-btn").addEventListener("click", function () {
+      // Get input values
+      const principal = parseFloat(document.getElementById("principal").value);
+      const interest = parseFloat(document.getElementById("interest").value);
+      const time = parseFloat(document.getElementById("time").value);
+
+      // Validate inputs
+      if (isNaN(principal) || isNaN(interest) || isNaN(time) || principal <= 0 || interest <= 0 || time <= 0) {
+        alert("Please enter valid values for all fields.");
+        return;
+      }
+
+      // Convert time to months
+      const timeInMonths = time * 12;
+
+      // Convert annual interest rate to monthly and decimal
+      const monthlyInterest = interest / 12 / 100;
+
+      // Calculate EMI
+      const emi =
+        (principal *
+          monthlyInterest *
+          Math.pow(1 + monthlyInterest, timeInMonths)) /
+        (Math.pow(1 + monthlyInterest, timeInMonths) - 1);
+
+      // Calculate total payment and total interest
+      const totalPayment = emi * timeInMonths;
+      const totalInterest = totalPayment - principal;
+
+      // Display results
+      document.getElementById("emi").textContent = emi.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR",
+      });
+      document.getElementById("total-interest").textContent = totalInterest.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR",
+      });
+      document.getElementById("total-payment").textContent = totalPayment.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR",
+      });
+
+      // Show result section
+      document.getElementById("result").classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
